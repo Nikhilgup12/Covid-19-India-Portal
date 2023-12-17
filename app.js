@@ -32,10 +32,10 @@ app.post('/login/', async (request, response) => {
     response.status(400)
     response.send('Invalid user')
   } else {
-    const isValidPassword = bcrypt.compare(password, dbuser.password)
+    const isValidPassword = await bcrypt.compare(password, dbuser.password)
     if (isValidPassword === true) {
       const payload = {username: username}
-      const jwtToken = await jwt.sign(payload, 'MY_Secret_Key')
+      const jwtToken = jwt.sign(payload, 'MY_Secret_Key')
       response.send({jwtToken})
     } else {
       response.status(400)
